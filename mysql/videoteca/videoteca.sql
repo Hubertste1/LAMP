@@ -1,0 +1,16 @@
+CREATE DATABASE IF NOT EXISTS videoteca;
+USE videoteca;
+
+CREATE TABLE Cliente (
+ID_Cliente int AUTO_INCREMENT PRIMARY KEY,
+Cognome VARCHAR(50),
+Nome VARCHAR(50),
+);
+
+CREATE TABLE Acquisto (
+ID_Acquisto int AUTO_INCREMENT PRIMARY KEY,
+ID_Film int NOT NULL,
+ID_Cliente int NOT NULL,
+FOREIGN KEY (ID_Film) REFERENCES Film(ID_) 
+
+);
