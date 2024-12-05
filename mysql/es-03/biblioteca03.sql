@@ -22,7 +22,7 @@ CREATE TABLE Veicoli (
 CREATE TABLE Noleggi (
     noleggio_id INT AUTO_INCREMENT PRIMARY KEY,
     cliente_id INT NOT NULL,
-    veicolo_id INT NOT NULL,
+    veicolo_id INT NULL, -- Permesso NULL per ON DELETE SET NULL
     data_inizio DATE NOT NULL,
     data_fine DATE NOT NULL,
     totale DECIMAL(10, 2) NOT NULL CHECK (totale > 0),
@@ -45,18 +45,18 @@ VALUES
     ('Anna', 'Bianchi', 'anna.bianchi@email.com', '3349876543'),
     ('Luca', 'Verdi', 'luca.verdi@email.com', '3355678901');
 
-    INSERT INTO Veicoli (modello, marca, anno, targa, prezzo_giornaliero)
+INSERT INTO Veicoli (modello, marca, anno, targa, prezzo_giornaliero)
 VALUES 
     ('Panda', 'Fiat', 2020, 'AB123CD', 30.00),
     ('Golf', 'Volkswagen', 2019, 'EF456GH', 45.00),
     ('Civic', 'Honda', 2021, 'IJ789KL', 50.00);
 
-    INSERT INTO Noleggi (cliente_id, veicolo_id, data_inizio, data_fine, totale)
+INSERT INTO Noleggi (cliente_id, veicolo_id, data_inizio, data_fine, totale)
 VALUES 
     (1, 1, '2024-11-01', '2024-11-05', 120.00),
     (2, 2, '2024-11-10', '2024-11-12', 90.00);
 
-    INSERT INTO Pagamenti (noleggio_id, data_pagamento, importo, metodo_pagamento)
+INSERT INTO Pagamenti (noleggio_id, data_pagamento, importo, metodo_pagamento)
 VALUES 
     (1, '2024-11-05', 120.00, 'Carta'),
     (2, '2024-11-12', 90.00, 'Bonifico');
