@@ -1,4 +1,4 @@
-CREATE DATABASE NoleggioVeicoli;
+CREATE DATABASE IF NOT EXISTS NoleggioVeicoli;
 USE NoleggioVeicoli;
 
 CREATE TABLE Clienti (
@@ -14,7 +14,7 @@ CREATE TABLE Veicoli (
     veicolo_id INT AUTO_INCREMENT PRIMARY KEY,
     modello VARCHAR(50) NOT NULL,
     marca VARCHAR(50) NOT NULL,
-    anno INT CHECK (anno >= 2000 AND anno <= YEAR(CURDATE())),
+    anno INT NOT NULL, -- Rimosso il CHECK per CURDATE()
     targa VARCHAR(15) UNIQUE NOT NULL,
     prezzo_giornaliero DECIMAL(10, 2) NOT NULL
 );
