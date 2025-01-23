@@ -108,5 +108,43 @@ select s.matricola, s.nome, s.cognome, s.data_nascita as 'data nascita', c.nome 
 
 select s.cognome, s.nome, v.voto, m.nome as 'materia' from studenti s, valutazioni v, materie m where s.matricola = v.FK_studenti and v.FK_materie = m.id order by cognome;
 
+select s.cognome, s.nome, v.voto, m.nome as 'materia', YEAR(curdate())-YEAR(s.data_nascita) as 'data nascita' from studenti s, valutazioni v, materie m where s.matricola = v.FK_studenti
+and v.FK_materie = m.id and s.cognome like 'R%' order by cognome;
 
+select s.cognome, s.nome, COUNT(v.voto) as 'numero voti', AVG(v.voto) as 'media voti', MAX(v.voto) as 'voto più alto', MIN(v.voto) as 'voto più basso'
+from studenti s, valutazioni v
+where v.FK_studenti = '3' and s.matricola = v.FK_studenti
+GROUP BY s.cognome;
 
+SELECT COUNT(*) AS NumeroStudenti
+FROM studenti s
+WHERE YEAR(curdate())-YEAR(s.data_nascita) > 18;
+
+SELECT s.matricola, s.nome, s.cognome
+FROM studenti s
+LEFT JOIN valutazioni v ON s.matricola = v.FK_studenti
+WHERE v.id IS NULL;
+
+SELECT cognome, nome, data_nascita
+FROM studenti;
+
+SELECT nome
+FROM studenti
+WHERE cognome = 'Rossi';
+
+SELECT TIMESTAMPDIFF(YEAR, data_nascita, CURDATE()) AS eta
+FROM studenti
+WHERE matricola = 1;
+
+SELECT nome
+FROM studenti
+WHERE nome LIKE 'M%';
+
+SELECT voto
+FROM valutazioni
+WHERE FK_studenti = 1;
+
+SELECT v.voto
+FROM valutazioni v
+JOIN studenti s ON v.FK_studenti = s.matricola
+WHERE s.cognome = 'Rossi';
