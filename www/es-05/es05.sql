@@ -15,14 +15,14 @@ SHOW GRANTS FOR ES05_user@localhost;
 CREATE TABLE IF NOT EXISTS utente (
   UserID INT NOT NULL AUTO_INCREMENT ,
   Username VARCHAR(64) NOT NULL UNIQUE,
-  Password VARCHAR(64) NOT NULL ,
+  Pass VARCHAR(64) NOT NULL ,
   PRIMARY KEY (UserID)
 ) AUTO_INCREMENT=1000;
 SHOW TABLES; 
 SHOW CREATE TABLE utente;
 
-INSERT INTO utente (UserID, Username, Password 
-) VALUES (NULL, 'utente', 'prova');
+INSERT INTO utente (UserID, Username, Pass) 
+VALUES (NULL, 'utente', 'prova');
 
 INSERT INTO utente VALUES 
 (NULL, 'mrossi', '123'),
