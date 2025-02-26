@@ -1,42 +1,57 @@
 <?php
-session_start(); // Avvia la sessione
-
-// Se l'utente è già loggato, mostra i link per la pagina riservata e logout
+session_start();
 if (isset($_SESSION['username'])) {
-    echo "Login già effettuato. <a href='riservata.php'>Vai alla pagina riservata</a> | <a href='logout.php'>Logout</a>";
-    exit;
+    header('Location: index.php');
+    die();
 }
 
-// Se il modulo di login è stato inviato
+if (isset($_GET['error'])) {
+    $err_msg = "<h3 style='color:red'>" . $_GET['error'] . '</h3>';
+}
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = $_POST['username'];
     $password = $_POST['password'];
+    if ($username == 'admin' && $password == 'admin') {
 
-    if (login($username, $password)) {
         $_SESSION['username'] = $username;
-        echo "Login avvenuto con successo! <a href='riservata.php'>Vai alla pagina riservata</a> | <a href='logout.php'>Logout</a>";
+        
+        $url = 'Location: ';
+        $url .= $_POST['from'] == null ? 'index.php' : $_POST['from'];
+
+        header($url);
+        die();
+
     } else {
-        echo "Credenziali errate. Riprova.";
+        $err_msg = "<h3 style='color:red'>username o pasword sbagliati</h3>";
     }
 }
 
+
 ?>
 
+
+
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
 </head>
 <body>
-    <h1>Effettua il Login</h1>
-    <form method="POST" action="login.php">
-        <label for="username">Nome utente:</label><br>
-        <input type="text" id="username" name="username" required><br><br>
-        <label for="password">Password:</label><br>
-        <input type="password" id="password" name="password" required><br><br>
-        <button type="submit">Accedi</button>
+    <?=$err_msg?>
+
+    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+        <label for="username">Username</label>
+        <input type="text" name="username" id="username">
+        <br>
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password">
+        <br>
+        <input type="submit" value="Login">
+
+        <input type="hidden" name="from" value="<?=$_GET['from'] ?? null ?>" >
     </form>
 </body>
 </html>
