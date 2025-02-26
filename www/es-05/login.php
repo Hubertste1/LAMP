@@ -1,6 +1,5 @@
 <?php
 session_start(); // Avvia la sessione
-include('function.php'); // Include il file delle funzioni
 
 // Se l'utente è già loggato, mostra i link per la pagina riservata e logout
 if (isset($_SESSION['username'])) {
