@@ -1,43 +1,33 @@
 <?php
 session_start();
 
+// Controlla se l'utente è già autenticato
+if (isset($_SESSION['username'])) {
+    header("Location: riservata.php");
+    exit();
+}
+
+$errmsg = $_GET['error'] ?? "";
+$from = $_GET['from'] ?? 'index.php'; // Default 'index.php' se non specificato
+
+// Verifica se il modulo è stato inviato
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    // Verifica le credenziali (modifica con il tuo controllo)
+    // Verifica delle credenziali (modifica con un sistema di autenticazione reale)
     if ($username == 'admin' && $password == 'password123') {
+        // Imposta la sessione e redirigi l'utente
         $_SESSION['username'] = $username;
-        header("Location: index.php"); // Reindirizza alla pagina di benvenuto
+        
+        // Controlla da dove proveniva la richiesta (pagina di provenienza)
+        $redirect_to = $_POST['from'] ?? 'index.php'; // Default è index.php
+        header("Location: $redirect_to");
         exit();
     } else {
-        $errore = "Credenziali errate!";
+        // Se le credenziali sono errate, reindirizza con un messaggio di errore
+        $url = "login.php?error=Credenziali errate&from=" . urlencode($from);
+        header("Location: $url");
+        exit();
     }
 }
-?>
-
-<!DOCTYPE html>
-<html lang="it">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-</head>
-<body>
-    <h1>Accedi</h1>
-    <form method="POST">
-        <label for="username">Nome utente:</label>
-        <input type="text" id="username" name="username" required><br><br>
-
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required><br><br>
-
-        <button type="submit">Accedi</button>
-    </form>
-    <?php
-    if (isset($errore)) {
-        echo "<p style='color:red;'>$errore</p>";
-    }
-    ?>
-</body>
-</html>

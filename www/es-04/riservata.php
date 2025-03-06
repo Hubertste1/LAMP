@@ -3,7 +3,9 @@ session_start();
 
 // Verifica se l'utente è autenticato
 if (!isset($_SESSION['username'])) {
-    header("Location: login.php"); // Reindirizza alla pagina di login se non è autenticato
+    // Se non è autenticato, reindirizza alla pagina di login con un messaggio di errore
+    $url = 'login.php?error=Devi fare prima il login&from=' . urlencode(basename($_SERVER['PHP_SELF']));
+    header("Location: $url");
     exit();
 }
 ?>
