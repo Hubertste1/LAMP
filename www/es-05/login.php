@@ -2,7 +2,7 @@
 // Includo il file delle funzioni
 include 'functions.php';
 
-// Avvio la sessione php per recuperare eventuali dati di sessione
+// Avvio la sessione PHP per recuperare eventuali dati di sessione
 session_start();
 
 $msg = $_GET['error'] ?? '';
@@ -13,17 +13,21 @@ if (isset($_SESSION['username'])) {
     $username = $_POST['username'] ?? '';
     $password = $_POST['password'] ?? '';
     try {
+        // Esegui il login
         [$loginRetval, $loginRetmsg] = login($username, $password);
 
         $msg = $loginRetmsg;
 
         if ($loginRetval) {
+            // Se login riuscito, salva il nome utente nella sessione
             $_SESSION['username'] = $username;
 
+            // Prepara il link di redirect
             $link = 'Location: ';
-            // Controlliamo se "from" è definito, altrimenti diamo il valore di default "index.php"
+            // Se 'from' è stato passato nel POST, usa quel valore, altrimenti usa 'index.php'
             $link .= isset($_POST['from']) && $_POST['from'] ? $_POST['from'] : 'index.php';
 
+            // Fai il redirect
             header($link);
             exit();
         }
@@ -32,28 +36,38 @@ if (isset($_SESSION['username'])) {
     }
 }
 
-//Form di login
+// Verifica se 'from' esiste in $_GET, altrimenti assegna un valore vuoto
+$from_value = isset($_GET['from']) ? $_GET['from'] : '';
+
+// Form di login
 $html_form = <<<FORM
 <form action="$_SERVER[PHP_SELF]" method="post">
-  <label for="nome"> </label><input type="text" name="username" placeholder="Nome utente" required/><br />
-  <label for="password"> </label><input type="password" name="password" placeholder="Password" required/><br />
+  <label for="username">Nome utente:</label><input type="text" name="username" placeholder="Nome utente" required/><br />
+  <label for="password">Password:</label><input type="password" name="password" placeholder="Password" required/><br />
   <input type="submit" value="Login" /><input type="reset" value="Cancel" />
-  <input type="hidden" name="from" value="{$_GET['from'] ?? ''}" />
-  <p class='error'>$msg</p>
+  <!-- Usa la variabile $from_value per il campo hidden -->
+  <input type="hidden" name="from" value="<?= htmlspecialchars($from_value) ?>" />
+  <p class='error'><?= htmlspecialchars($msg) ?></p>
 </form>
 FORM;
 
-// Creo il codice html da visualizzare a seconda dei valori di $from e $retval
+// Creo il codice HTML da visualizzare a seconda dei valori di $from e $retval
 $html_out = "<p class='error'>$msg</p>";
 $html_out .= $html_form;
 $html_out .= "Non hai un account? <a href='register.php'>Registrati adesso</a>.<br />";
 $html_out .= "Hai dimenticato la password? <a href='pwd_reset.php'>Resetta la password</a>.<br />";
 $html_out .= "<a href='index.php'>Torna alla Home Page</a>.<br />";
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
   <title>Login</title>
+  <style>
+    .error {
+      color: red;
+    }
+  </style>
 </head>
 <body>
   <h2>Pagina di login</h2>
