@@ -1,26 +1,36 @@
 <?php
-// Avvio la sessione php per recuperare eventuali dati di sessione
-session_start();
+// Costanti per la connessione al database
+define('DB_SERVER', 'localhost');
+define('DB_USERNAME', 'ES05_user');
+define('DB_PASSWORD', 'mia_password');
+define('DB_NAME', 'es05');
+$html_out = "";
+try {
+// Connessione al database
+$conn = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
 
-// Verifica se l'utente è autenticato
-$utente = $_SESSION['username'] ?? 'Ospite';
+// Verifica della connessione
+if (!$conn) {
+    //die("Connessione fallita: " . mysqli_connect_error());
+    $html_out = "Attenzione! Connessione al database fallita." . mysqli_connect_error();
+}
+$html_out = "Connessione al database riuscita.";
+// ... successivamente eseguire le query qui ...
 
-// Creazione dei link in funzione dell'utente Ospite o Autenticato 
-// ...
-$html_link .= '<a href="login.php">Pagina Login</a>';
-$html_link2 .= '<a href="riservata.php">Pagina Riservata</a>';
- 
+// Chiusura della connessione
+mysqli_close($conn);
+} catch (Exception $e) {
+$html_out = "Attenzione! Si è verificata un'eccezione. " . $e->getMessage();
+}
 ?>
 <!DOCTYPE html>
 <html>
 <head>
   <title>Login</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-  <h2>ES05 - Login con PHP e MySql</h2>
-  <p>Benvenuto <?=$utente?>. Questa è la home page del sito.<br />
-  <?=$html_link?><br/>
-  <?=$html_link2?>
-  <!-- Link -->
+  <h2>Test della connessione al database</h2>
+  <?=$html_out?>
 </body>
 </html>
