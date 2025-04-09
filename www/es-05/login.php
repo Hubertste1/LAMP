@@ -1,57 +1,65 @@
 <?php
+// Includo il file delle funzioni
+include 'functions.php';
+
+// Avvio la sessione php per recuperare eventuali dati di sessione
 session_start();
-if (isset($_SESSION['username'])) {
-    header('Location: index.php');
-    die();
+
+$msg = $_GET['error'] ?? '';
+
+if(isset($_SESSION['username'])) {
+    $msg = 'Login già effettuato';
 }
+else if($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $username = $_POST['username'] ?? '';
+    $password = $_POST['password'] ?? '';
+  try{
+    [$loginRetval, $loginRetmsg] = login($username, $password);
+    
+    $msg = $loginRetmsg;
+    
+    if($loginRetval) {
+        $_SESSION['username'] = $username; 
 
-if (isset($_GET['error'])) {
-    $err_msg = "<h3 style='color:red'>" . $_GET['error'] . '</h3>';
-}
+        $link = 'Location: ';
+        $link .= $_POST['from'] != null ? $_POST['from'] : 'index.php';
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-    if ($username == 'admin' && $password == 'admin') {
-
-        $_SESSION['username'] = $username;
-        
-        $url = 'Location: ';
-        $url .= $_POST['from'] == null ? 'index.php' : $_POST['from'];
-
-        header($url);
+        header($link);
         die();
 
-    } else {
-        $err_msg = "<h3 style='color:red'>username o pasword sbagliati</h3>";
     }
+  }catch(Exception $e){
+    $msg = 'Errore durante il login: '. $e->getMessage();
+  }
 }
-
-
 ?>
 
+<?php
+//Form di login
+$html_form = <<<FORM
+<form action="$_SERVER[PHP_SELF]" method="post">
+  <label for="nome"> </label><input type="text" name="username" placeholder="Nome utente" required/><br />
+  <label for="password"> </label><input type="password" name="password" placeholder="Password" required/><br />
+  <input type="submit" value="Login" /><input type="reset" value="Cancel" />
+  <input type="hidden" name="from" value="{$_GET['from']}" />
+  <p class='error'>$msg</p>
+</form>
+FORM;
 
-
+// Creo il codice html da visualizzare a seconda dei valori di $from e $retval
+  $html_out = "<p class='error'>$errmsg</p>";
+  $html_out .= $html_form;
+  $html_out .= "Non hai un account? <a href='register.php'>Registrati adesso</a>.<br />";
+  $html_out .= "Hai dimenticato la password? <a href='pwd_reset.php'>Resetta la password</a>.<br />";
+  $html_out .= "<a href='index.php'>Torna alla Home Page</a>.<br />";
+?>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+  <title>Login</title>
 </head>
 <body>
-    <?=$err_msg?>
-
-    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
-        <label for="username">Username</label>
-        <input type="text" name="username" id="username">
-        <br>
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password">
-        <br>
-        <input type="submit" value="Login">
-
-        <input type="hidden" name="from" value="<?=$_GET['from'] ?? null ?>" >
-    </form>
+  <h2>Pagina di login</h2>
+  <?=$html_out?>
 </body>
 </html>

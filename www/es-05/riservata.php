@@ -1,25 +1,33 @@
-
 <?php
-session_start(); // Avvia la sessione
+    require 'functions.php';
 
-// Verifica se l'utente è autenticato
-if (!isset($_SESSION['username'])) {
-    header('Location: login.php');
-    exit;
-}
+    session_start();
 
+    [$sessionRetval, $sessionRetmsg] = checkSession();
+
+    if ($sessionRetval == false) {
+        $url = 'Location: login.php';
+        $url .= '?from='.basename($_SERVER['PHP_SELF']);
+        $url .= '&error=' . $sessionRetmsg;
+        header($url);
+        die();
+    }
 
 ?>
 
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
     <title>Pagina Riservata</title>
 </head>
 <body>
-    <h1>Benvenuto nella pagina riservata, <?php echo $_SESSION['username']; ?>!</h1>
-    <a href="index.php">Torna alla home</a> | <a href="logout.php">Logout</a>
+    <?="<h3>Benvenuto " . $_SESSION['username'] . "</h3>"?>
+
+    <a href="index.php">Home page</a>
+    <br>
+    <a href="logout.php">Logout</a>
 </body>
 </html>
