@@ -31,3 +31,10 @@ if ($result) {
 
 mysqli_close($conn);
 ?>
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Elenco Tabelle Database</title>
+</head>
+<body>
