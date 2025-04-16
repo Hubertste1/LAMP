@@ -1,40 +1,51 @@
 <?php
-// Connessione al database
 define('DB_SERVER', 'localhost');
 define('DB_USERNAME', 'ES05_user');
 define('DB_PASSWORD', 'mia_password');
 define('DB_NAME', 'ES05');
 
-$conn = mysqli_connect(DB_SERVER,DB_USERNAME,DB_PASSWORD,DB_NAME);
+$conn = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
 
-
-if (!$conn) {
-    die("Connessione fallita: " . mysqli_connect_error());
-}
-
-
-$query = "SHOW TABLES FROM $database";
-$result = mysqli_query($conn, $query);
-
-
-if ($result) {
-    echo "<h3>Tabelle presenti nel database <em>$database</em>:</h3>";
-    echo "<ul>";
-    while ($row = mysqli_fetch_row($result)) {
-        echo "<li>" . $row[0] . "</li>";
+    if (!$conn) {
+        die("Connessione fallita: " . mysqli_connect_error());
     }
-    echo "</ul>";
-} else {
+    
+$sql = "SELECT * FROM utente";
+$result = mysqli_query($conn, $sql);
+
+if($result){
+    $html_out = '<table>';
+
+    $field = mysqli_fetch_fields($result);
+
+    foreach($field as $f){
+        $html_out .= '<th>'.$f->name.'</th>';
+    }
+
+    while($row = mysqli_fetch_assoc($result)){
+        $html_out .= '<tr>';
+        foreach($row as $r){
+            $html_out .= '<td>'.$r.'</td>';
+        }
+        $html_out .= '</tr>';
+    }
+    $html_out .= '</table>';
+    echo $html_out;
+}
+else{
     echo "Errore nella query: " . mysqli_error($conn);
 }
 
-
-mysqli_close($conn);
 ?>
+
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Elenco Tabelle Database</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link 
 </head>
 <body>
+    
+</body>
+</html>
