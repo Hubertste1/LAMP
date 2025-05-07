@@ -1,10 +1,10 @@
 <?php
-define('DB_SERVER', 'localhost');
-define('DB_USERNAME', 'ES05_user');
-define('DB_PASSWORD', 'mia_password');
-define('DB_NAME', 'ES05');
+$host = 'db'; // non 'localhost' o '127.0.0.1'
+$user = 'user';
+$pass = 'userpass';
+$db   = 'utenti_db';
 
-$conn = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+$conn = mysqli_connect($host, $user, $pass, $db);
 
     if (!$conn) {
         die("Connessione fallita: " . mysqli_connect_error());
