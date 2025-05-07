@@ -1,0 +1,9 @@
+CREATE DATABASE IF NOT EXISTS utenti_db;
+
+USE utenti_db;
+
+CREATE TABLE IF NOT EXISTS utenti (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL,
+    password VARCHAR(255) NOT NULL
+);
