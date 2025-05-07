@@ -1,14 +1,15 @@
 <?php
 $host = 'db';
-$db   = 'utenti_db';
-$user = 'user';
-$pass = 'userpass';
+$db   = 'mariadb';
+$user = 'mariadb';
+$pass = 'mariadb';
 
 $conn = new mysqli($host, $user, $pass, $db);
 
 if ($conn->connect_error) {
     die("Errore di connessione: " . $conn->connect_error);
 }
+
 
 $username = $_POST['username'];
 $password = $_POST['password'];
