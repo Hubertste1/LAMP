@@ -1,32 +1,32 @@
 <?php
-$host = 'db';
-$db   = 'mariadb';
-$user = 'mariadb';
-$pass = 'mariadb';
+define('DB_SERVER', 'localhost');
+define('DB_USERNAME', 'ES05_user');
+define('DB_PASSWORD', 'mia_password');
+define('DB_NAME', 'utenti_db');
 
-$conn = new mysqli($host, $user, $pass, $db);
+$conn = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
 
-if ($conn->connect_error) {
-    die("Errore di connessione: " . $conn->connect_error);
+if (!$conn) {
+    die("Errore di connessione: " . mysqli_connect_error());
 }
-
 
 $username = $_POST['username'];
 $password = $_POST['password'];
 
+// ATTENZIONE: Vulnerabile a SQL Injection – usare mysqli_prepare per sicurezza
 $sql = "SELECT * FROM utenti WHERE username='$username' AND password='$password'";
-$result = $conn->query($sql);
+$result = mysqli_query($conn, $sql);
 
-if ($result->num_rows > 0) {
+if (mysqli_num_rows($result) > 0) {
     echo "Benvenuto $username";
 } else {
     $insert = "INSERT INTO utenti (username, password) VALUES ('$username', '$password')";
-    if ($conn->query($insert) === TRUE) {
+    if (mysqli_query($conn, $insert)) {
         echo "Benvenuto $username, il login è andato a buon fine";
     } else {
-        echo "Errore nella registrazione: " . $conn->error;
+        echo "Errore nella registrazione: " . mysqli_error($conn);
     }
 }
 
-$conn->close();
+mysqli_close($conn);
 ?>
