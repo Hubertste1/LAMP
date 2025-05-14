@@ -7,7 +7,7 @@ USE ES06; SHOW DATABASES;
 CREATE USER IF NOT EXISTS ES06_user@localhost IDENTIFIED BY 'mia_password';
 -- ALTER USER ES06_user@localhost IDENTIFIED BY 'nuova_password';
 SELECT user, host FROM mysql.user;
-GRANT SELECT, INSERT, UPDATE, DELETE ON ES06.* TO ES6_user@localhost;
+GRANT SELECT, INSERT, UPDATE, DELETE ON ES06.* TO ES06_user@localhost;
 -- GRANT ALL ON ES06.* TO ES05_user@localhost;
 SHOW GRANTS FOR ES06_user@localhost;
 

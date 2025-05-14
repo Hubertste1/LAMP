@@ -1,6 +1,6 @@
 <?php
 define('DB_SERVER', 'localhost');
-define('DB_USERNAME', 'ES6_user');
+define('DB_USERNAME', 'ES06_user');
 define('DB_PASSWORD', 'mia_password');
 define('DB_NAME', 'ES06');
 
