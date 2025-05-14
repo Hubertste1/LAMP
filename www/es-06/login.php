@@ -1,6 +1,6 @@
 <?php
 define('DB_SERVER', 'localhost');
-define('DB_USERNAME', 'ES6_user');
+define('DB_USERNAME', 'ES06_user');
 define('DB_PASSWORD', 'mia_password');
 define('DB_NAME', 'ES06');
 
@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    $query = "SELECT * FROM utenti WHERE username='$username' AND password='$password'";
+    $query = "SELECT * FROM utente WHERE username='$username' AND password='$password'";
     $risultato = mysqli_query($conn, $query);
 
     if (mysqli_num_rows($risultato) > 0) {
