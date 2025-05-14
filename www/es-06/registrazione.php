@@ -23,14 +23,14 @@ try{if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo "Le password non coincidono.";
     } else {
         // Controlla se esiste già
-        $checkQuery = "SELECT * FROM utenti WHERE username='$username'";
+        $checkQuery = "SELECT * FROM utente WHERE username='$username'";
         $checkResult = mysqli_query($conn, $checkQuery);
 
         if (mysqli_num_rows($checkResult) > 0) {
             echo "Username già in uso.";
         } else {
             // Inserimento nuovo utente
-            $query = "INSERT INTO utenti (username, password, email) VALUES ('$username', '$password', '$email')";
+            $query = "INSERT INTO utente (username, password, email) VALUES ('$username', '$password', '$email')";
             $result = mysqli_query($conn, $query);
 
             if ($result) {
