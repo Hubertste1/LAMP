@@ -5,8 +5,7 @@ define('DB_PASSWORD', 'mia_password');
 define('DB_NAME', 'ES06');
 
 session_start();
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+try{if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $conn = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
     if (!$conn) {
         die("Errore di connessione: " . mysqli_connect_error());
@@ -44,6 +43,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     mysqli_close($conn);
 }
+}catch(Exception $e){
+echo $e->getMessage();
+}
+
 ?>
 
 <!-- Form HTML -->
