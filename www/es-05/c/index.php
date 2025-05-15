@@ -9,7 +9,7 @@ $utente = $_SESSION['username'] ?? 'Ospite';
 // ...
 $html_link .= '<a href="login.php">Pagina Login</a>';
 $html_link2 .= '<a href="riservata.php">Pagina Riservata</a>';
- 
+$html_link3 .= '<a href="test.php">Pagina Login</a>';
 ?>
 <!DOCTYPE html>
 <html>
@@ -21,6 +21,6 @@ $html_link2 .= '<a href="riservata.php">Pagina Riservata</a>';
   <p>Benvenuto <?=$utente?>. Questa è la home page del sito.<br />
   <?=$html_link?><br/>
   <?=$html_link2?>
-  <!-- Link -->
+  <?=$html_link3?>
 </body>
 </html>
