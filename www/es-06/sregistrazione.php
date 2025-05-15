@@ -12,6 +12,6 @@ $html_link1 = "<a href='login.php'>Login</a>";
 </head>
 <body>
     <h2>Benvenuto <?php $username?>, la registrazione e' andata a buon fine</h2>
-    <?php $html_link1?>
+    <?php echo $html_link1?>
 </body>
 </html>
