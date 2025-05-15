@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-$username=$_SESSION["username"];
+$utente=$_SESSION["username"];
 $html_link1 = "<a href='login.php'>Login</a>";
 ?>
 
@@ -11,7 +11,7 @@ $html_link1 = "<a href='login.php'>Login</a>";
     <title>Login dopo registrazione</title>
 </head>
 <body>
-    <h2>Benvenuto <?php $username?>, la registrazione e' andata a buon fine</h2>
-    <?php echo $html_link1?>
+    <h1>Benvenuto <?php echo $utente?> </h1>
+    <?php echo "La registrazione e' andata a buon fine $html_link1"?>
 </body>
 </html>
