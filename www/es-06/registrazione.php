@@ -34,7 +34,8 @@ try{if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $result = mysqli_query($conn, $query);
 
             if ($result) {
-                echo "Registrazione avvenuta con successo. <a href='login.php'>Vai al login</a>";
+                echo "Registrazione avvenuta con successo.";
+                header("location: login.php");
             } else {
                 echo "Errore durante la registrazione: " . mysqli_error($conn);
             }
