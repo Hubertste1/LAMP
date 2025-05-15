@@ -27,7 +27,7 @@ INSERT INTO utente (UserID, Username, Password
 INSERT INTO utente VALUES 
 (NULL, 'mrossi', '123'),
 (NULL, 'admin', 'admin');
---Modifico il programma sql in modo tale da poter inserire la registrazione con email
+-- Modifico il programma sql in modo tale da poter inserire la registrazione con email
 ALTER TABLE utente 
 ADD Email VARCHAR(255) UNIQUE AFTER Password;
 
