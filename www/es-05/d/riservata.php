@@ -18,5 +18,6 @@ $username = $_SESSION['username'];
     <h2>Benvenuto nella tua area riservata</h2>
     <p>Ciao <strong><?php echo $username; ?></strong>, sei autenticato correttamente!</p>
     <p><a href="logout.php">Logout</a></p>
+    <p><a href="index.php">Home Page</a></p>
 </body>
 </html>
