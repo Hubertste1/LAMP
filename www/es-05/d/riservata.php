@@ -1,33 +1,22 @@
 <?php
-    require 'functions.php';
+session_start();
 
-    session_start();
+if (!isset($_SESSION['username'])) {
+    echo "Accesso negato. <a href='login.php'>Accedi</a>";
+    exit;
+}
 
-    [$sessionRetval, $sessionRetmsg] = checkSession();
-
-    if ($sessionRetval == false) {
-        $url = 'Location: login.php';
-        $url .= '?from='.basename($_SERVER['PHP_SELF']);
-        $url .= '&error=' . $sessionRetmsg;
-        header($url);
-        die();
-    }
-
+$username = $_SESSION['username'];
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <title>Pagina Riservata</title>
+    <title>Area Riservata</title>
 </head>
 <body>
-    <?="<h3>Benvenuto " . $_SESSION['username'] . "</h3>"?>
-
-    <a href="index.php">Home page</a>
-    <br>
-    <a href="logout.php">Logout</a>
+    <h2>Benvenuto nella tua area riservata</h2>
+    <p>Ciao <strong><?php echo $username; ?></strong>, sei autenticato correttamente!</p>
+    <p><a href="logout.php">Logout</a></p>
 </body>
 </html>
