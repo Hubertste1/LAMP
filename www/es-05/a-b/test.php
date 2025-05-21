@@ -18,7 +18,7 @@ $html_out = "Connessione al database riuscita.";
 // Chiusura della connessione
 mysqli_close($conn);
 } catch (Exception $e) {
-$html_out = '<h1 color="red">Attenzione! Si è verificata un\'eccezione. ' . $e->getMessage() . '</h1>';
+$html_out = '<h1 style="color:red;">Attenzione! Si è verificata un\'eccezione. ' . $e->getMessage() . '</h1>';
 }
 ?>
 <!DOCTYPE html>
