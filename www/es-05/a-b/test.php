@@ -11,7 +11,7 @@ $conn = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
 
 // Verifica della connessione
 if (!$conn) {
-    $html_out = "Attenzione! Connessione al database fallita." . mysqli_connect_error();
+    $html_out = '<h2 style="color:red;">Attenzione! Connessione al database fallita.' . mysqli_connect_error() . '</h2>';
 }
 $html_out = "Connessione al database riuscita.";
 
