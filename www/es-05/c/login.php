@@ -4,43 +4,34 @@ define('DB_USERNAME', 'ES05_user');
 define('DB_PASSWORD', 'mia_password');
 define('DB_NAME', 'ES05');
 
-session_start();
-
-if (isset($_SESSION['username'])) {
-    echo "Sei già loggato come <strong>" . $_SESSION['username'] . "</strong>. <a href='logout.php'>Logout</a>";
-    exit;
-}
+$title = "Login";
+$html = "";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $conn = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+
     if (!$conn) {
-        die("Errore di connessione: " . mysqli_connect_error());
-    }
-
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-
-    $query = "SELECT * FROM utente WHERE username='$username' AND password='$password'";
-    $risultato = mysqli_query($conn, $query);
-
-    if (mysqli_num_rows($risultato) > 0) {
-        $_SESSION['username'] = $username;
-        echo "Benvenuto login andato a buon fine";
+        $title = "Errore di Connessione";
+        $html = "<p>Errore di connessione al database: " . mysqli_connect_error() . "</p>";
     } else {
-        echo "Nome utente o password errati.";
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+
+        $query = "SELECT * FROM utente WHERE username='$username' AND password='$password'";
+        $risultato = mysqli_query($conn, $query);
+
+        if (mysqli_num_rows($risultato) > 0) {
+            $title = "Accesso riuscito";
+            $html = "<p>Benvenuto <strong>$username</strong>, login riuscito.</p>";
+        } else {
+            $title = "Accesso negato";
+            $html = "<p>Nome utente o password errati. <a href=''>Riprova</a></p>";
+        }
+
+        mysqli_close($conn);
     }
-
-    mysqli_close($conn);
-}
-?>
-
-<!-- Form HTML -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Login</title>
-</head>
-<body>
+} else {
+    $html = <<<FORM
     <h2>Accedi</h2>
     <form method="POST" action="">
         <label>Username:</label><br>
@@ -51,5 +42,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         <input type="submit" value="Accedi">
     </form>
+    FORM;
+}
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title><?php echo htmlspecialchars($title); ?></title>
+</head>
+<body>
+    <?php echo $html; ?>
 </body>
 </html>
