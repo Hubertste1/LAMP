@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if (mysqli_num_rows($risultato) > 0) {
         $_SESSION['username'] = $username;
-        echo "Benvenuto login andato a buon fine"
+        echo "Benvenuto login andato a buon fine";
     } else {
         echo "Nome utente o password errati.";
     }
