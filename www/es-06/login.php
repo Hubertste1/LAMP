@@ -17,6 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         die("Errore di connessione: " . mysqli_connect_error());
     }
 
+
     $username = $_POST['username'];
     $password = $_POST['password'];
 
@@ -32,6 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     mysqli_close($conn);
 }
+
 ?>
 
 <!-- Form HTML -->
